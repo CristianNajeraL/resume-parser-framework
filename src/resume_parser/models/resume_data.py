@@ -13,11 +13,13 @@ class ResumeData:
         name: Full name of the candidate
         email: Email address of the candidate
         skills: List of technical or professional skills
+        allow_partial: If True, allows empty name/email for partial extraction
     """
 
     name: str
     email: str
     skills: List[str] = field(default_factory=list)
+    allow_partial: bool = field(default=False, repr=False, compare=False)
 
     def to_dict(self) -> dict[str, str | List[str]]:
         """Convert resume data to dictionary format.
@@ -39,7 +41,10 @@ class ResumeData:
         """Validate resume data after initialization."""
         if not isinstance(self.skills, list):
             raise TypeError("skills must be a list")
-        if not self.name:
-            raise ValueError("name cannot be empty")
-        if not self.email:
-            raise ValueError("email cannot be empty")
+
+        # Only validate non-empty name/email in strict mode
+        if not self.allow_partial:
+            if not self.name:
+                raise ValueError("name cannot be empty")
+            if not self.email:
+                raise ValueError("email cannot be empty")
