@@ -1,0 +1,51 @@
+services:
+  resume-parser:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: resume-parser
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - SPACY_MODEL=en_core_web_sm
+      - PYTHONPATH=/app/src
+    volumes:
+      # Mount source code for development
+      - ./src:/app/src:ro
+      - ./tests:/app/tests:ro
+      - ./examples:/app/examples:ro
+      # Mount test fixtures
+      - ./tests/fixtures:/app/tests/fixtures:rw
+      # Mount directory for user files
+      - ./resumes:/app/resumes:ro
+    command: pytest tests/ -v
+
+  # Service for running examples
+  examples:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: resume-parser-examples
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+    volumes:
+      - ./src:/app/src:ro
+      - ./examples:/app/examples:ro
+      - ./tests/fixtures:/app/tests/fixtures:ro
+    command: python examples/basic_pdf_example.py
+
+  # Service for development with shell access
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: resume-parser-dev
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+    volumes:
+      - ./src:/app/src
+      - ./tests:/app/tests
+      - ./examples:/app/examples
+      - ./resumes:/app/resumes
+    command: /bin/bash
+    stdin_open: true
+    tty: true
