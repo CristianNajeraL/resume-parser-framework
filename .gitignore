@@ -216,3 +216,15 @@ __marimo__/
 .streamlit/secrets.toml
 
 .DS_Store
+
+# Security - API keys and credentials
+*.key
+*.pem
+*.crt
+*.cer
+*.p12
+*.pfx
+credentials.json
+secrets.json
+*_secrets.yaml
+*_secrets.yml
