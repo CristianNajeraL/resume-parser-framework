@@ -24,7 +24,7 @@ class ExtractorConfig(BaseSettings):
 
         # With explicit values (overrides environment)
         config = ExtractorConfig(
-            gemini_api_key="my_key",
+            gemini_api_key="your_api_key_here",  # Use env var instead!
             spacy_model="en_core_web_md"
         )
 
@@ -58,7 +58,7 @@ class ExtractorConfig(BaseSettings):
     )
 
     gemini_model: str = Field(
-        default="gemini-pro",
+        default="gemini-2.0-flash",
         description="Gemini model name to use for skills extraction",
     )
 

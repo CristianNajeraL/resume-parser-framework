@@ -41,7 +41,7 @@ class ParserFactory:
         self._parsers: dict[str, Type[FileParser]] = {
             ".pdf": PDFParser,
             ".docx": WordParser,
-            ".doc": WordParser,  # Support older .doc format
+            ".doc": WordParser,  # Support older .doc format (python-docx handles both)
         }
 
         # Validate and add custom parsers

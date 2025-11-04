@@ -7,6 +7,7 @@ from .extractors import (
     NameExtractor,
     SkillsExtractor,
 )
+from .framework import ResumeParserFramework
 from .models import ResumeData
 from .parsers import FileParser, ParserFactory, PDFParser, WordParser
 from .resume_extractor import ResumeExtractor
@@ -29,4 +30,6 @@ __all__ = [
     "ExtractorConfig",
     # Coordinator
     "ResumeExtractor",
+    # Framework
+    "ResumeParserFramework",
 ]
